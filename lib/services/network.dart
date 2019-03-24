@@ -24,4 +24,26 @@ class Network {
       }
     }
   }
+
+  static dynamic register(String name, String email, String password, String passwordComfirmation) async {
+    try {
+      final response = await http.post(
+        'http://127.0.0.1:3001/api/v1/registrations',
+        body: {
+          'email': email,
+          'password': password,
+          'password_confirmation': passwordComfirmation,
+          'name':name
+        }
+      );
+      final responseJSON = json.decode(response.body);
+      return responseJSON;
+    } catch (exception) {
+      if (exception.toString().contains('SocketException')) {
+        return 'Network Error';
+      } else {
+        return null;
+      }
+    }
+  }
 }

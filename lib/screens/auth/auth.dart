@@ -42,18 +42,6 @@ class _AuthState extends State<Auth>
   Color left = Colors.black;
   Color right = Colors.white;
 
-  authenticate() async {
-    var response = await Network.authenticate(loginEmailController.text, loginPasswordController.text);
-    print(response);
-    if (response['success'] == false) {
-      ErrorResponse.showSnackBar(_scaffoldKey, response['errors'][0]);
-    } else if(response == 'NetworkError') {
-      ErrorResponse.showSnackBar(_scaffoldKey, 'Sorry something went wrong.');
-    } else {
-      Navigator.of(context).pushNamed('/profile');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -65,9 +53,7 @@ class _AuthState extends State<Auth>
         child: SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height >= 775.0
-                    ? MediaQuery.of(context).size.height
-                    : 775.0,
+                height: MediaQuery.of(context).size.height,
                 decoration: new BoxDecoration(
                   gradient: new LinearGradient(
                       colors: [
@@ -83,10 +69,10 @@ class _AuthState extends State<Auth>
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top: 75.0),
+                      padding: EdgeInsets.only(top: 85.0, bottom: 20.0),
                       child: new Image(
-                          width: 80.0,
-                          height: 80.0,
+                          width: 180.0,
+                          height: 30.0,
                           fit: BoxFit.fill,
                           image: new AssetImage('assets/img/logo.png')),
                     ),
@@ -233,7 +219,7 @@ class _AuthState extends State<Auth>
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Container(
-                  width: 300.0,
+                  width: 330.0,
                   height: 190.0,
                   child: Column(
                     children: <Widget>[
@@ -262,7 +248,7 @@ class _AuthState extends State<Auth>
                         ),
                       ),
                       Container(
-                        width: 250.0,
+                        width: 280.0,
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
@@ -333,17 +319,16 @@ class _AuthState extends State<Auth>
                     splashColor: Theme.Colors.loginGradientEnd,
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
+                      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
                       child: Text(
                         "LOGIN",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
+                          color: Colors.white,
+                          fontSize: 23.0,
+                          fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () => authenticate(),
+                    onPressed: () => _authenticate(),
                 ),
               ),
             ],
@@ -469,7 +454,7 @@ class _AuthState extends State<Auth>
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Container(
-                  width: 300.0,
+                  width: 330.0,
                   height: 360.0,
                   child: Column(
                     children: <Widget>[
@@ -498,7 +483,7 @@ class _AuthState extends State<Auth>
                         ),
                       ),
                       Container(
-                        width: 250.0,
+                        width: 280.0,
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
@@ -526,7 +511,7 @@ class _AuthState extends State<Auth>
                         ),
                       ),
                       Container(
-                        width: 250.0,
+                        width: 280.0,
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
@@ -562,7 +547,7 @@ class _AuthState extends State<Auth>
                         ),
                       ),
                       Container(
-                        width: 250.0,
+                        width: 280.0,
                         height: 1.0,
                         color: Colors.grey[400],
                       ),
@@ -637,7 +622,7 @@ class _AuthState extends State<Auth>
                         "SIGN UP",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25.0,
+                          fontSize: 23.0,
                           fontFamily: "WorkSansBold"),
                       ),
                     ),
@@ -649,6 +634,22 @@ class _AuthState extends State<Auth>
         ],
       ),
     );
+  }
+
+  void _authenticate() async {
+    var response = await Network.authenticate(loginEmailController.text, loginPasswordController.text);
+    print(response);
+    if (response['success'] == false) {
+      ErrorResponse.showSnackBar(_scaffoldKey, response['errors'][0]);
+    } else if(response == 'NetworkError') {
+      ErrorResponse.showSnackBar(_scaffoldKey, 'Sorry something went wrong.');
+    } else {
+      Navigator.of(context).pushNamed('/profile');
+    }
+  }
+
+  void _register() async {
+
   }
 
   void _onSignInButtonPress() {
